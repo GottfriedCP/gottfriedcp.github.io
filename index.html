@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- c.html - create new message -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Project Heresy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- markdown editor -->
+    <script src="static/showdown/showdown.min.js"></script>
+    <!-- END markdown editor -->
+    <!-- Compression module -->
+    <script src="static/LZMA/lzma_worker-min.js"></script>
+    <!-- END Compression module -->
+    <!-- Cryptography module -->
+    <script src="static/crypto-js/aes.js"></script>
+    <script src="static/crypto-js/tripledes.js"></script>
+    <script src="static/crypto-js/rabbit.js"></script>
+    <script src="static/crypto-js/rc4.js"></script>
+    <!-- END Cryptography module -->
+    <link rel="stylesheet" type="text/css" media="screen" href="static/main.css" />
+    <script src="static/main.js"></script>
+</head>
+<body>
+    <div id="create-message">
+        <label for="message">Type your message below </label><br>
+        <textarea name="message" id="message" rows="10" cols="50" placeholder="Use Markdown to style" required></textarea><br><br>
+
+        <label for="aes">Choose encryption algorithm </label><br>
+        <input type="radio" name="algorithm" value="aes" checked> AES (recommended)<br>
+        <input type="radio" name="algorithm" value="des"> Triple DES<br>
+        <input type="radio" name="algorithm" value="rab"> Rabbit<br>
+        <input type="radio" name="algorithm" value="rc4"> RC4Drop<br><br>
+        
+        <label for="passphrase">Choose passphrase </label><br>
+        <input type="password" name="passphrase" id="passphrase" minlength="8" placeholder="Minimum 8 characters" required><br><br>
+        
+        <button type="button" onclick="createHash()">Encrypt message</button>
+    </div>
+    <div id="show-message">
+        <input type="password" name="passphrase-check" id="passphrase-check" minlength="8" placeholder="Enter correct passphrase" required style="margin-bottom: 2%;">
+        <button type="button" onclick="decodeHash()">Decrypt message</button><br><br>
+        <div id="message-content">
+            Your message should appear here
+        </div>
+    </div>
+    <div id="footer">
+        <p><small>&copy; 2018 Gottfried Prasetyadi | <a href="/">Home</a></small></p>
+    </div>
+</body>
+</html>

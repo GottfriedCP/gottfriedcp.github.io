@@ -49,8 +49,10 @@ function createHash() {
         window.location.hash = ciphertext.toString()
         console.log('length of final ciphertext: ' + ciphertext.toString().length)
         //console.log(ciphertext.toString()) // TODO: delete this when possible
+
+        document.getElementById('status').innerHTML = 'Success. The URL in your browser\' address bar can now be saved or shared.'
     } catch(e) {
-        alert('Error: Unable to create message: ' + e.message)
+        document.getElementById('status').innerHTML = 'Error: Unable to create message: ' + e.message
         console.log(e.message)
     }
 }
@@ -72,7 +74,7 @@ function decodeHash() {
         let converter = new showdown.Converter() // initialize markdown converter
         document.getElementById('message-content').innerHTML = converter.makeHtml(plaintext)
     } catch(e) {
-        alert('Error: Unable to decrypt - ' + e.message)
+        document.getElementById('message-content').innerHTML = 'Error: Unable to decrypt - ' + e.message
         console.error(e.message)
     }
 }

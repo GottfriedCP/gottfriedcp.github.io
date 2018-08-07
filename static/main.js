@@ -3,13 +3,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     determineOperation()
 })
 
+// DEBUG: time measurement
+let encryptStartTime, encryptEndTime
+let decryptStartTime, decryptEndTime
+
 function determineOperation() {
     if (!document.location.hash) {
         // show message creation form
         document.getElementById('show-message').style.display = 'none'
         document.getElementById('create-message').style.display = 'inline'
     } else {
-        // try decode the message in URL fragment
+        // try to decode the message in URL fragment
         document.getElementById('show-message').style.display = 'inherit'
         document.getElementById('create-message').style.display = 'none'
     }
@@ -33,7 +37,12 @@ function createHash() {
         // set the cipher algorithm
         let cipher = getCipher(algo)
         // compress and encrypt
+        encryptStartTime = new Date()
         let ciphertext = cipher.encrypt(compress(rawMessage), passphrase)
+        encryptEndTime = new Date()
+        let timeDiff = encryptEndTime - encryptStartTime
+        alert('encrypted in ' + timeDiff + ' ms')
+        console.log('encrypted in ' + timeDiff + ' ms')
         // Set query string parameter containing crypto algo
         window.history.replaceState(null, '', '?' + algo)
         // Append message to URL fragment
@@ -52,8 +61,12 @@ function decodeHash() {
         let passphrase = document.getElementById('passphrase-check').value
         if (passphrase.length < 8) throw new Error('Minimum length of passphrase is 8')
         let cipher = getCipher(algo)
+        decryptStartTime = new Date()
         let compressedplaintext = cipher.decrypt(ciphertext, passphrase).toString(CryptoJS.enc.Utf8)
         let plaintext = decompress(base64ToByteArray(compressedplaintext))
+        decryptEndTime = new Date()
+        let timeDiff = decryptEndTime - decryptStartTime
+        alert('decrypted in '+ timeDiff +' ms')
         
         let converter = new showdown.Converter() // initialize markdown converter
         document.getElementById('message-content').innerHTML = converter.makeHtml(plaintext)
@@ -70,6 +83,8 @@ function compress(data) {
     /// (A Node.js Buffer or a Uint8Array instance counts as an array of bytes.)
     // return return base64 string
     let base64string = btoa(String.fromCharCode.apply(null, new Uint8Array(LZMA.compress(data, 9))))
+    let timeDiff = compressEndTime - compressStartTime
+    console.log('compression time (ms): ' + timeDiff)
     console.log('length of compressed message: ' + base64string.length)
     return base64string
 }

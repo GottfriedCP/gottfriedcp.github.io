@@ -50,7 +50,8 @@ function createHash() {
         console.log('length of final ciphertext: ' + ciphertext.toString().length)
         //console.log(ciphertext.toString()) // TODO: delete this when possible
     } catch(e) {
-        alert(e.message)
+        alert('Error: Unable to create message: ' + e.message)
+        console.log(e.message)
     }
 }
 
@@ -71,7 +72,7 @@ function decodeHash() {
         let converter = new showdown.Converter() // initialize markdown converter
         document.getElementById('message-content').innerHTML = converter.makeHtml(plaintext)
     } catch(e) {
-        alert('Error: invalid cipher or key - ' + e.message)
+        alert('Error: Unable to decrypt - ' + e.message)
         console.error(e.message)
     }
 }

@@ -83,8 +83,6 @@ function compress(data) {
     /// (A Node.js Buffer or a Uint8Array instance counts as an array of bytes.)
     // return return base64 string
     let base64string = btoa(String.fromCharCode.apply(null, new Uint8Array(LZMA.compress(data, 9))))
-    let timeDiff = compressEndTime - compressStartTime
-    console.log('compression time (ms): ' + timeDiff)
     console.log('length of compressed message: ' + base64string.length)
     return base64string
 }

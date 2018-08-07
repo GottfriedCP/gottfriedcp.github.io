@@ -99,13 +99,13 @@ function decompress(data) {
 }
 
 function base64ToByteArray(base64) {
-    let raw = window.atob(base64);
-    let rawLength = raw.length;
-    let array = new Uint8Array(new ArrayBuffer(rawLength));
+    let raw = window.atob(base64)
+    let rawLength = raw.length
+    let array = new Uint8Array(new ArrayBuffer(rawLength))
     for(i = 0; i < rawLength; i++) {
-        array[i] = raw.charCodeAt(i);
+        array[i] = raw.charCodeAt(i)
     }
-    return array;
+    return array
 }
 
 function getCipher(algo) {

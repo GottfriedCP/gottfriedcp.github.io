@@ -41,7 +41,7 @@ function createHash() {
         let ciphertext = cipher.encrypt(compress(rawMessage), passphrase)
         encryptEndTime = new Date()
         let timeDiff = encryptEndTime - encryptStartTime
-        alert('encrypted in ' + timeDiff + ' ms')
+        //alert('encrypted in ' + timeDiff + ' ms')
         console.log('encrypted in ' + timeDiff + ' ms')
         // Set query string parameter containing crypto algo
         window.history.replaceState(null, '', '?' + algo)
@@ -49,8 +49,8 @@ function createHash() {
         window.location.hash = ciphertext.toString()
         console.log('length of final ciphertext: ' + ciphertext.toString().length)
         //console.log(ciphertext.toString()) // TODO: delete this when possible
-
-        document.getElementById('status').innerHTML = 'Success. The URL in your browser\' address bar can now be saved or shared.'
+        copyURL()
+        document.getElementById('status').innerHTML = 'Success. The URL is copied to clipboard.'
     } catch(e) {
         document.getElementById('status').innerHTML = 'Error: Unable to create message: ' + e.message
         console.log(e.message)
@@ -69,7 +69,7 @@ function decodeHash() {
         let plaintext = decompress(base64ToByteArray(compressedplaintext))
         decryptEndTime = new Date()
         let timeDiff = decryptEndTime - decryptStartTime
-        alert('decrypted in '+ timeDiff +' ms')
+        //alert('decrypted in '+ timeDiff +' ms')
         
         let converter = new showdown.Converter() // initialize markdown converter
         document.getElementById('message-content').innerHTML = converter.makeHtml(plaintext)
@@ -122,4 +122,14 @@ function getCipher(algo) {
         default:
             throw new Error('Unable to set cipher: ' + algo + ' is not valid')
     }
+}
+
+function copyURL() {
+    let text = location.href
+    let dummy = document.createElement("input")
+    document.body.appendChild(dummy)
+    dummy.value = text
+    dummy.select()
+    document.execCommand("copy")
+    document.body.removeChild(dummy)
 }
